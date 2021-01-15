@@ -1,7 +1,8 @@
-package br.com.pedromoura
+package br.com.pedromoura.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import br.com.pedromoura.R
 
 class MainActivity : AppCompatActivity() {
 
