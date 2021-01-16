@@ -32,7 +32,6 @@ class BookListFragment : Fragment() {
                 BookViewModel::class.java
         )
     }
-    //private val URL_BASE = "https://www.googleapis.com/books/v1/"
 
     //endregion
 
@@ -59,7 +58,6 @@ class BookListFragment : Fragment() {
         setUpView()
         setUpListeners()
         initViewModel()
-        //getData()
     }
 
     //endregion
@@ -94,38 +92,13 @@ class BookListFragment : Fragment() {
     private fun initViewModel() {
         viewModel.bookResponse.observe(requireActivity()) { state ->
             state?.let {
-                binding?.txtTile?.text = it.get(0).title
+                //binding?.txtTile?.text = it.get(0).title
                 //navigateToIntroduction(it)
+
+                mListRecyclerView?.adapter = BookListAdapter(it)
             }
         }
     }
-
-
-    /*private fun getData() {
-        val retrofitClient = NetworkUtils.getRetrofitInstance(URL_BASE)
-
-        val endpoint = retrofitClient.create(ServicesBook::class.java)
-        val callback = endpoint.getBooks()
-
-        callback.enqueue(object : Callback<BookDTO> {
-            override fun onResponse(call: Call<BookDTO>, response: Response<BookDTO>) {
-                if (response.isSuccessful) {
-
-                    val book = response.body()
-
-                    //mListRecyclerView?.adapter = BookListAdapter(book)
-
-                    //val strCep = book?.kind
-
-                    //binding?.txtTile?.text = book?.kind
-                }
-            }
-
-            override fun onFailure(call: Call<BookDTO>, t: Throwable) {
-                Toast.makeText(activity, "Ocorreu um erro na requisição!", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }*/
 
     //endregion
 

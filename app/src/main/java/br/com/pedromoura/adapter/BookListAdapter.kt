@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import br.com.pedromoura.R
 import br.com.pedromoura.model.Book
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_book_list.view.*
+
 
 class BookListAdapter(private val products: List<Book>) : RecyclerView.Adapter<BookListAdapter.BookHolder>() {
 
@@ -21,7 +22,11 @@ class BookListAdapter(private val products: List<Book>) : RecyclerView.Adapter<B
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_book_list, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(
+            R.layout.item_book_list,
+            parent,
+            false
+        )
         return BookHolder(view)
     }
 
@@ -40,9 +45,17 @@ class BookListAdapter(private val products: List<Book>) : RecyclerView.Adapter<B
         }
 
         fun bind(book: Book) {
-            //thumb?.setImageResource(book.thumb)
-            //title?.text = book.items[position].volumeInfo.get(position).title
-            //title?.text = book.kind
+            title?.text = book.title
+
+            val imageUri = book.thumb
+
+            Picasso.with(itemView.context)
+                    .load(imageUri)
+                    .fit()
+                    .centerCrop()
+                    //.placeholder(R.drawable.user_placeholder)
+                    //.error(R.drawable.user_placeholder_error)
+                    .into(thumb);
 
             itemView.card_view_book.setOnClickListener {
                 itemView?.findNavController()?.navigate(R.id.BookDetailFragment)

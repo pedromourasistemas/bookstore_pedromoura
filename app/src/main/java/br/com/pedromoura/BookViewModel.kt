@@ -29,8 +29,6 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
         val endpoint = retrofitClient.create(ServicesBook::class.java)
         val callback = endpoint.getBooks()
 
-        //var books: List<Book>? = ArrayList()
-
         var books: MutableList<Book> = mutableListOf()
 
         callback.enqueue(object : Callback<BookDTO> {
@@ -41,8 +39,16 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
 
                     bookResp?.items?.forEach { item ->
                         var title = item.volumeInfo.title
+                        var description = item.volumeInfo.description
+                        var thumb = item.volumeInfo.imageLinks?.thumbnail
 
-                        var book = Book(null, null, title, null, null, true)
+                        var authors: ArrayList<String> = ArrayList()
+
+                        item.volumeInfo.authors?.forEach {
+                            authors.add(it)
+                        }
+
+                        var book = Book(thumb, title, description, authors, null, false)
 
                         books.add(book)
                     }
