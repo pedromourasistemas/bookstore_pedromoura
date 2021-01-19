@@ -20,7 +20,6 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
 
     var bookResponse: MutableLiveData<List<Book>> = MutableLiveData()
     var bookDetailResponse: MutableLiveData<Book> = MutableLiveData()
-    var bookClicked: MutableLiveData<String> = MutableLiveData()
     var bookClickedId: String? = null
 
     //endregion

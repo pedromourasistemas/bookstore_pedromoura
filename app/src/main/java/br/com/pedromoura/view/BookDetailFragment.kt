@@ -2,27 +2,22 @@ package br.com.pedromoura.view
 
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import br.com.pedromoura.databinding.FragmentBookDetailBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import br.com.pedromoura.BookViewModel
+import br.com.pedromoura.databinding.FragmentBookDetailBinding
 import com.squareup.picasso.Picasso
 
-class BookDetailFragment : Fragment(), BookClicked {
+class BookDetailFragment : Fragment() {
 
     //region Attributes
 
     var binding: FragmentBookDetailBinding? = null
-    private val viewModel: BookViewModel by lazy {
-        ViewModelProvider(this).get(
-            BookViewModel::class.java
-        )
-    }
+    val viewModel: BookViewModel by activityViewModels()
 
     //endregion
 
@@ -34,8 +29,8 @@ class BookDetailFragment : Fragment(), BookClicked {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
         binding = FragmentBookDetailBinding.inflate(inflater, container, false)
@@ -49,10 +44,6 @@ class BookDetailFragment : Fragment(), BookClicked {
         setUpView()
         setUpListeners()
         initViewModel()
-    }
-
-    override fun clickedBook(id: String) {
-        viewModel.bookClickedId = id
     }
 
     //endregion
@@ -70,6 +61,7 @@ class BookDetailFragment : Fragment(), BookClicked {
             getUrlFromIntent()
         }
     }
+
     private fun initViewModel() {
         viewModel.bookDetailResponse.observe(requireActivity()) { state ->
             state?.let { book ->
@@ -77,12 +69,12 @@ class BookDetailFragment : Fragment(), BookClicked {
                 val imageUri = book.thumb
 
                 Picasso.with(activity)
-                    .load(imageUri)
-                    .fit()
-                    .centerCrop()
-                    //.placeholder(R.drawable.user_placeholder)
-                    //.error(R.drawable.user_placeholder_error)
-                    .into(binding?.imgThumb);
+                        .load(imageUri)
+                        .fit()
+                        .centerCrop()
+                        //.placeholder(R.drawable.user_placeholder)
+                        //.error(R.drawable.user_placeholder_error)
+                        .into(binding?.imgThumb);
 
                 binding?.txtTitle?.text = book.title
 
@@ -109,8 +101,4 @@ class BookDetailFragment : Fragment(), BookClicked {
     }
 
     //endregion
-
-    companion object {
-
-    }
 }

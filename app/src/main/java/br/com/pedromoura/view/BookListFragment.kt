@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.pedromoura.BookViewModel
+import br.com.pedromoura.R
 import br.com.pedromoura.adapter.BookListAdapter
 import br.com.pedromoura.databinding.FragmentBookListBinding
 
@@ -19,13 +21,7 @@ class BookListFragment : Fragment() {
 
     var mListRecyclerView: RecyclerView? = null
     var binding: FragmentBookListBinding? = null
-
-    val viewModel: BookViewModel by lazy {
-        ViewModelProvider(this).get(
-            BookViewModel::class.java
-        )
-    }
-
+    val viewModel: BookViewModel by activityViewModels()
 
     //endregion
 
@@ -71,23 +67,19 @@ class BookListFragment : Fragment() {
 
     }
 
+    fun onClickListItem(id: String) {
+        viewModel.bookClickedId = id
+
+        findNavController()?.navigate(R.id.BookDetailFragment)
+    }
+
     private fun initViewModel() {
         viewModel.bookResponse.observe(requireActivity()) { state ->
             state?.let {
-                mListRecyclerView?.adapter = BookListAdapter(it)
-            }
-        }
-
-        viewModel.bookClicked.observe(requireActivity()) { state ->
-            state?.let {
-                viewModel.bookClickedId = it
+                mListRecyclerView?.adapter = BookListAdapter(it, this::onClickListItem)
             }
         }
     }
 
     //endregion
-}
-
-interface BookClicked {
-    fun clickedBook(id: String)
 }
