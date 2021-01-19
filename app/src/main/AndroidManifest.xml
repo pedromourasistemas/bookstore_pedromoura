@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/ic_book_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookStore_PedroMoura">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.BookActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
