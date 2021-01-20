@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import br.com.pedromoura.model.Book
 import com.google.gson.Gson
-import java.util.*
-import kotlin.collections.ArrayList
-
 
 class UserSessionManager(context: Context) {
 
@@ -29,8 +26,8 @@ class UserSessionManager(context: Context) {
         val settings: SharedPreferences
         //val editor: Editor
         settings = context.getSharedPreferences(
-            PREF_NAME,
-            Context.MODE_PRIVATE
+                PREF_NAME,
+                Context.MODE_PRIVATE
         )
         //editor = settings.edit()
         val gson = Gson()
@@ -58,36 +55,19 @@ class UserSessionManager(context: Context) {
         val settings: SharedPreferences
         var favorites: List<Book?>?
         settings = context.getSharedPreferences(
-            PREF_NAME,
-            Context.MODE_PRIVATE
+                PREF_NAME,
+                Context.MODE_PRIVATE
         )
         if (settings.contains(BOOK_FAVORITE)) {
             val jsonFavorites = settings.getString(BOOK_FAVORITE, null)
             val gson = Gson()
             val favoriteItems: List<Book> = gson.fromJson<List<Book>>(
-                jsonFavorites,
-                Book::class.java
+                    jsonFavorites,
+                    Book::class.java
             )
             favorites = favoriteItems
             favorites = ArrayList<Book>(favorites)
         } else return null
         return favorites as ArrayList<Book?>?
     }
-
-    /*fun setBooksFavorites(books: List<Book>) {
-        val gson = Gson()
-        val json = gson.toJson(books)
-
-        editor?.putString("Books", json)
-        editor?.commit()
-    }
-
-    fun getBooksFavorites() : List<Book> {
-        val gson = Gson()
-        val json = pref?.getString("Books", "")
-
-        val mBooks: Book = gson.fromJson(json, Book::class.java)
-
-        return mBooks
-    }*/
 }

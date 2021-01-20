@@ -12,7 +12,6 @@ import br.com.pedromoura.model.Book
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_book_list.view.*
 
-
 class BookListAdapter(private val books: List<Book>, val listener: (String) -> Unit) : RecyclerView.Adapter<BookListAdapter.BookHolder>() {
 
     override fun onBindViewHolder(holder: BookHolder, position: Int) {
